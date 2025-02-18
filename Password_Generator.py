@@ -1,9 +1,10 @@
-import random
+import secrets
 import string
 
 ## Funciones para generar contraseñas
-generate_password = lambda longi: ''.join(random.choices(string.ascii_letters + string.digits, k=longi))
-generate_special_password = lambda longi: ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=longi))
+generate_password = lambda longi: ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(longi))
+generate_special_password = lambda longi: ''.join(secrets.choice(
+    string.ascii_letters + string.digits + string.punctuation) for _ in range(longi))
 
 ## Historial de contraseñas
 password_history = []
@@ -15,9 +16,18 @@ while(True):
     print("3. Salir \n")
 
     option = input("Escribe tu opción: ").strip()
+    
 
     if option == "1":
-        longi = int(input("\nEscribe la cantidad de dígitos: "))
+        try:
+            longi = int(input("\nEscribe la cantidad de dígitos: "))
+            if longi <= 0:
+                print("❌ El número debe ser mayor que 0.")
+                continue  
+        except ValueError:
+            print("❌ Valor inválido. Ingresa un número entero.")
+            continue 
+
 
         caracters = input("¿Deseas incluir caracteres especiales? (Si/No): ").strip().capitalize()
 
@@ -26,7 +36,7 @@ while(True):
         elif caracters == "Si":
             password = generate_special_password(longi)
         else:
-            print("Opción no válida, por favor escribe 'Si' o 'No'.")
+            print("❌ Opción no válida, por favor escribe 'Si' o 'No'.")
             continue
 
         password_history.append(password)  # Guardar en historial
@@ -38,7 +48,7 @@ while(True):
             for i, passw in enumerate(password_history):
                 print(f"{i + 1}. {passw}")
         else:
-            print("\n No has generado ninguna contraseña aún.")
+            print("\n ✋ No has generado ninguna contraseña aún.")
 
     elif option == "3":
         print("\n ¡Vuelve pronto!")
