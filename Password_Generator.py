@@ -20,9 +20,9 @@ while(True):
 
     if option == "1":
         try:
-            longi = int(input("\nEscribe la cantidad de dígitos: "))
-            if longi <= 0:
-                print("❌ El número debe ser mayor que 0.")
+            longi = int(input("\nEscribe la cantidad de caracteres: "))
+            if longi <= 5:
+                print("❌ El número debe ser mayor que 5.")
                 continue  
         except ValueError:
             print("❌ Valor inválido. Ingresa un número entero.")
